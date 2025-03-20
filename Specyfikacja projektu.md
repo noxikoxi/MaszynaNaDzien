@@ -75,34 +75,35 @@
 
 #### 6. Makiety
 - strona główna
-	![[MainPage.png]]
+	![MainPage](assets/MainPage.png)
 - strona z wszystkimi maszynami rolniczymi
 	- wersja dla Administratora
-	 ![[MachinesList.png]]
+	 ![MachinesList](assets/MachinesList.png)
 	- wersja dla Użytkownika
-	 ![[MachinesUser.png]]
+	 ![MachinesUser](assets/MachinesUser.png)
 	- wersja dla Gościa
-	 ![[MachinesQuest.png]]
+	 ![MachinesQuest](assets/MachinesQuest.png)
 - strona z wszystkimi rezerwacjami
-  ![[Reservations.png]]
+  ![Reservations](assets/Reservations.png)
 - strona z rezerwacjami użytkownika
-  ![[MyReservations.png]]
+  ![MyReservations](assets/MyReservations.png)
 
 - strona umożliwiająca zarezerwowanie maszyny przez użytkownika
-  ![[MachineReservation.png]]
+  ![MachineReservation](assets/MachineReservation.png)
 
 - strona z danymi zalogowanego użytkownika
-  ![[UserProfile.png]]
+  ![UserProfile](assets/UserProfile.png)
 - strona do rejestracji
-  ![[Register.png]]
+   ![Register](assets/Register.png)
 - strona do zalogowania się
-  ![[Login.png]]
+  ![Login](assets/Login.png)
 - strona wyświetlająca wszystkich użytkowników
-  ![[UsersList.png]]
+  ![UsersList](assets/UsersList.png)
 - strona umożliwiająca dodanie nowego sprzętu do bazy danych
-  ![[AddMachine.png]]
+  ![AddMachine](assets/AddMachine.png)
 - strona umożliwiająca dodanie nowego konta użytkownika
-  ![[AddUser.png]]
+  ![AddUser](assets/AddUser.png)
+
 #### 7. Baza Danych
 Przedstawione są tabele wykorzystane w bazie danych.
 
