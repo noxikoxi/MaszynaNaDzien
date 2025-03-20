@@ -7,6 +7,7 @@
 #### 2. Funkcjonalność serwisu
 - wyświetlanie listy wszystkich maszyn rolniczych,
 - wyświetlanie listy rezerwacji maszyn rolniczych,
+- sortowanie wyświetlanej listy maszyn i rezerwacji,
 - tworzenie/anulowanie rezerwacji,
 - logowanie i wylogowywanie użytkowników,
 - podział na zwykłych użytkowników i administratorów,
@@ -25,7 +26,7 @@
 	- wylogowanie się z aplikacji,
 	- modyfikacja swojego konta.
 - funkcjonalności dostępne z poziomu **administratora**:
-	- tworzenie, modyfikacja i usuwanie kont użytkowników,
+	- tworzenie i usuwanie kont użytkowników,
 	- wyświetlanie wszystkich kont użytkowników,
 	- wyświetlenie listy wszystkich maszyn rolniczych,
 	- wyświetlanie listy rezerwacji maszyn rolniczych,
@@ -44,7 +45,7 @@
 
 #### 5. Wymagane endpointy do prawidłowego funkcjonowania aplikacji
 - pobieranie użytkowników z bazy danych:
-	- *\[GET\] /users
+	- *\[GET\] /users/{opcja_sortowania}*
 - rejestracja:
 	- *\[POST\] /users/register*
 - logowanie:
@@ -58,96 +59,80 @@
 - wyświetlenie danych użytkownika:
 	- *\[GET\] /users/{user_id}*
 - pobieranie rezerwacji z bazy danych:
-	- *\[GET\] /reservations
+	- *\[GET\] /reservations/{opcja_sortowania}*
 - tworzenie rezerwacji:
-	- *\[POST\] /reservations
+	- *\[POST\] /reservations*
 - anulowanie rezerwacji:
-	- *\[DELETE\] /reservations/{reservation_id}
+	- *\[DELETE\] /reservations/{reservation_id}*
 - pobieranie informacji o sprzęcie z bazy danych:
-	- *\[GET\] /machines* 
+	- *\[GET\] /machines/{opcja_sortowania}*
 - dodanie nowego sprzętu do bazy danych:
-	- *\[POST\] /machines
+	- *\[POST\] /machines*
 - usunięcie sprzętu z bazy danych:
-	- *\[POST\] /machines/{machine_id}
+	- *\[POST\] /machines/{machine_id}*
 - strona główna:
 	-  *\[GET\] /*
 
 #### 6. Makiety
 - strona główna
+	![[MainPage.png]]
 - strona z wszystkimi maszynami rolniczymi
+	- wersja dla Administratora
+	 ![[MachinesList.png]]
+	- wersja dla Użytkownika
+	 ![[MachinesUser.png]]
+	- wersja dla Gościa
+	 ![[MachinesQuest.png]]
 - strona z wszystkimi rezerwacjami
+  ![[Reservations.png]]
 - strona z rezerwacjami użytkownika
-- strona z danymi zalogowanego użytkownika
-- strona do rejestracji
-- strona do zalogowania się
-- strona wyświetlająca wszystkich użytkowników 
-- strona umożlwiająca dodanie/usunięcie sprzęty z bazy danych
+  ![[MyReservations.png]]
 
+- strona umożliwiająca zarezerwowanie maszyny przez użytkownika
+  ![[MachineReservation.png]]
+
+- strona z danymi zalogowanego użytkownika
+  ![[UserProfile.png]]
+- strona do rejestracji
+  ![[Register.png]]
+- strona do zalogowania się
+  ![[Login.png]]
+- strona wyświetlająca wszystkich użytkowników
+  ![[UsersList.png]]
+- strona umożliwiająca dodanie nowego sprzętu do bazy danych
+  ![[AddMachine.png]]
+- strona umożliwiająca dodanie nowego konta użytkownika
+  ![[AddUser.png]]
 #### 7. Baza Danych
 Przedstawione są tabele wykorzystane w bazie danych.
 
 **Users**
-- ID 
-	- INTEGER
-	- NOT NULL
-	- PRIMARY KEY
-	- AUTOINCREMET
-- Name
-	- TEXT
-- Surname
-	- TEXT
-- Password
-	- TEXT
-- Email
-	- TEXT
-- Location
-	- TEXT
-- Phone
-	- TEXT
-- TypeID
-	- INTEGER
+- ID -> INTEGER, NOT NULL, PRIMARY KEY, AUTOINCREMET
+- Name -> TEXT, NOT NULL
+- Surname -> TEXT, NOT NULL
+- Password -> TEXT, NOT NULL
+- Email -> TEXT, NOT NULL
+- Location -> TEXT
+- Phone -> TEXT
+- TypeID -> INTEGER, NOT NULL
 
 **UserType**
-- ID
-	- INTEGER
-	- NOT NULL
-	- PRIMARY KEY
-	- AUTOINCREMENT
-- Type
-	- TEXT
-	 
+- ID -> INTEGER, NOT NULL, PRIMARY KEY, AUTOINCREMET
+- Type -> TEXT, NOT NULL
+
 **Machines**
-- ID
-	- INTEGER
-	- NOT NULL
-	- PRIMARY KEY
-	- AUTOINCREMENT
-- Type
-	- INTEGER
-- Name
-	- TEXT
-- Description
-	- TEXT 
+- ID -> INTEGER, NOT NULL, PRIMARY KEY, AUTOINCREMET
+- Type -> INTEGER, NOT NULL
+- Name -> TEXT, NOT NULL
+- Description -> TEXT
 	
 **MachineType**
-- ID
-	- INTEGER
-	- NOT NULL
-	- AUTOINCREMENT
-- Type
-	- TEXT
+- ID -> INTEGER, NOT NULL, PRIMARY KEY, AUTOINCREMET
+- Type -> TEXT, NOT NULL
 
 **Reservations**
-- ID
-	- INTEGER
-	- NOT NULL
-	- PRIMARY KEY
-	- AUTOINCREMENT
-- UserID
-	- INTEGER
-- MachineID
-	- INTEGER
-- DateFrom
-	- TEXT
-- DateTo
-	- TEXT
+- ID -> INTEGER, NOT NULL, PRIMARY KEY, AUTOINCREMET
+- UserID -> INTEGER, NOT NULL
+- MachineID -> INTEGER, NOT NULL
+- DateFrom -> TEXT, NOT NULL
+- DateTo -> TEXT, NOT NULL
