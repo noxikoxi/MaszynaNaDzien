@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+html{
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: linear-gradient(-125deg, #9EB9E4 50%, #5577AC 100%);
+}
+
+.middleContainer{
+  padding-top: 100px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap:1em;
+  justify-content: center;
+  align-items: center;
+}
+
+a{
+  text-decoration: none;
+  color: inherit;
+}
+
+#logo{
+  font-family: 'Kalam', cursive;
+}
+
+.mainText{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 2.5rem;
+  letter-spacing: 0.2em;
+}
