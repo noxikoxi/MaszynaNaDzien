@@ -36,4 +36,9 @@ const User = sequelize.define(
     }
 )
 
+User.associate = (models) => {
+    User.belongsTo(models.UserType, { foreignKey: "type_id" });
+    User.hasMany(models.Reservation, { foreignKey: "user_id", onDelete: "CASCADE" });
+};
+
 module.exports = User;

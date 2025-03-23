@@ -3,7 +3,7 @@ const User = require('./user');
 const UserType = require('./userType');
 const MachineType = require('./machineType');
 const Machine = require('./machine');
-const Reservation = require('./reservations');
+const Reservation = require('./reservation');
 
 const db = {
     sequelize,
@@ -14,23 +14,30 @@ const db = {
     Reservation
 };
 
+
+Object.keys(db).forEach((modelName) => {
+    if (db[modelName].associate) {
+        db[modelName].associate(db);
+    }
+});
+
 async function initializeDefaults() {
     try {
         const userTypesCount = await UserType.count();
         if (userTypesCount === 0) {
             await UserType.bulkCreate([
-                { name: 'User' },
-                { name: 'Admin' }
+                { type: 'User' },
+                { type: 'Admin' }
             ]);
-            console.log('Dodano domyślne typy użytkowników.');
+            console.log('Added default User Types.');
         }
     } catch (error) {
-        console.error('Błąd przy dodawaniu domyślnych typów użytkowników:', error);
+        console.error('Error adding default User Types:', error);
     }
 }
 
 // Synchronization
-sequelize.sync({ alter: true }).then(async () => {
+sequelize.sync({ alter: false }).then(async () => {
     console.log('Database & tables created!');
     await initializeDefaults();
 });

@@ -10,6 +10,10 @@ const MachineType = sequelize.define(
             allowNull: false,
         },
     }
-    )
+)
+
+MachineType.associate = (models) => {
+    MachineType.hasMany(models.Machine, { foreignKey: "type_id" });
+};
 
 module.exports = MachineType;

@@ -18,6 +18,11 @@ const Machine = sequelize.define(
             allowNull: true
         }
     }
-    )
+)
+
+Machine.associate = (models) => {
+    Machine.belongsTo(models.MachineType, { foreignKey: "type_id" })
+    Machine.hasMany(models.Reservation, { foreignKey: "machine_id", onDelete: "CASCADE" });
+};
 
 module.exports = Machine;

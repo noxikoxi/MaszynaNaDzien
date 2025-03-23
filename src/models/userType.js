@@ -10,6 +10,10 @@ const UserType = sequelize.define(
             allowNull: false,
         },
     }
-    )
+)
+
+UserType.associate = (models) => {
+    UserType.hasMany(models.User, { foreignKey: "type_id" });
+};
 
 module.exports = UserType;

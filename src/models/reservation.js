@@ -14,14 +14,19 @@ const Reservation = sequelize.define(
             allowNull: false,
         },
         date_from: {
-            type: DataTypes.TEXT,
+            type: DataTypes.DATE,
             allowNull: false,
         },
         date_to: {
-            type: DataTypes.TEXT,
+            type: DataTypes.DATE,
             allowNull: false,
         }
     }
 )
+
+Reservation.associate = (models) => {
+    Reservation.belongsTo(models.User, { foreignKey: "user_id" });
+    Reservation.belongsTo(models.Machine, { foreignKey: "machine_id" });
+};
 
 module.exports = Reservation;
