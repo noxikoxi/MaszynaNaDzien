@@ -21,7 +21,7 @@ const getAll = async (req, res, sortOption) => {
             include: [
                 {
                     model: db.User,
-                    attributes: ['given_name', 'surname']
+                    attributes: ['given_name', 'surname', 'email']
                 },
                 {
                     model: db.Machine,
@@ -36,18 +36,35 @@ const getAll = async (req, res, sortOption) => {
             ]
         });
 
-        switch (sortOption){
-            case "byName":
-                reservations.sort((a, b) => a.User.given_name.localeCompare(b.User.given_name));
-                break;
-            case "byType":
-                reservations.sort((a, b) => a.Machine.MachineType.type.localeCompare(b.Machine.MachineType.type));
-                break;
-        }
+        reservations.sort((a, b) => {
+            const dateA = new Date(a.date_from);
+            const dateB = new Date(b.date_from);
+            return dateA - dateB;
+        });
 
-        return res.status(200).json({ reservations});
+        const formattedReservations = reservations.map(reservation => ({
+            id: reservation.id,
+            user: reservation.User.given_name && reservation.User.surname ? `${reservation.User.given_name} ${reservation.User.surname}` : reservation.User.email,
+            machineType: reservation.Machine.MachineType.type,
+            machine: reservation.Machine.name,
+            date_from : reservation.date_from,
+            date_to: reservation.date_to
+        }));
+
+        console.log(formattedReservations);
+
+        res.render('reservations', {
+            title: "Rezerwacje",
+            nav: {
+                users: false,
+                reservations: true,
+                machines: true,
+                user: false
+            },
+            reservations: formattedReservations
+        })
     }catch(error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
 

@@ -1,17 +1,17 @@
 extends layout
 block content
-    div
-        div.grid-header
-            form(action="/machines", method="GET")
-                select(name="sort", id="sort" onchange="this.form.submit()").sortSelect.text-sm
-                    option(value="", selected=true, hidden=true) Sortuj
-                    option(value='byId') Domyślne
-                    option(value='byName') Nazwa
-                    option(value="byType") Typ
-            h3.info.text-md.title Nasze Maszyny
+    div.grid-header
+        h3.info.text-md.title Nasze Maszyny
+        form(action="/machines", method="GET")
+            select(name="sort", id="sort" onchange="this.form.submit()").sortSelect.text-sm
+                option(value="", selected=true, hidden=true) Sortuj
+                option(value='byId') Domyślne
+                option(value='byName') Nazwa
+                option(value="byType") Typ
+    div.content-container
         div.grid-container
             each machine in machines
-                div.machine-quest-item
+                div.machine-item.grid-item
                     div.machine-type.center-content #{machine.type}
                     div.machine-name.center-content #{machine.name}
                     div.machine-description.center-content #{machine.description}

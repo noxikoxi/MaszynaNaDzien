@@ -1,1 +1,13 @@
 extends layout
+block content
+    div.grid-header
+        h3.info.text-md.title Rezerwacje
+    div.content-container
+        div.grid-container
+             each reservation in reservations
+                 div.reservation-item.grid-item
+                     div.reservation_date_from.center-content Od #{reservation.date_from}
+                     div.reservation_date_to.center-content Do #{reservation.date_to}
+                     div.reservation_machine_type.center-content #{reservation.machineType}
+                     div.reservation_machine.center-content #{reservation.machine}
+                     div.reservation_who.center-content #{reservation.user}
