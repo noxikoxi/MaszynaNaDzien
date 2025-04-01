@@ -1,19 +1,20 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-const userService = require("../controllers/usersController");
+const userController = require("../controllers/usersController");
+const isAuthenticated = require("../middlewares/auth");
 
 /* GET users listing. */
 router.get('/', async function(req, res, next) {
   const sortOption = req.query.sortOption;
-  await userService.getAllUser(req, res, sortOption);
+  await userController.getAllUser(req, res, sortOption);
 });
 
 // specific user routes
-router.delete('/:userId', userService.deleteUser);
+router.post('/delete/:userId', userController.deleteUser);
 
-router.get('/:userId', userService.getUserInfo);
+router.get('/:userId', isAuthenticated, userController.getUserInfo);
 
-router.put('/:userId', userService.updateUserInfo);
+router.post('/:userId', userController.updateUserInfo);
 
 module.exports = router;

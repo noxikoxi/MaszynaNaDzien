@@ -7,8 +7,12 @@ html
     div.middleContainer(style="justify-content: center")
       a(href='/')
         p#logo.mainText.info MaszynaNaDzień
-      a(href='/login')
-        p.mainText.info Zaloguj Się
+      if isLoggedIn
+        a(href=`/users/${userId}`)
+          p.mainText.info Profil Użytkownika
+      else
+        a(href='/login')
+          p.mainText.info Zaloguj Się
       a(href='/machines')
         p.mainText.info Dostepne Maszyny
       a(href='/reservations')

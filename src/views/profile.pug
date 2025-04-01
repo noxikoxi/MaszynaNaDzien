@@ -1,0 +1,26 @@
+extends layout
+block content
+    div.container.profile-container
+        div.center-content
+            h1.info Profil Użytkownika
+        hr
+        form(action=`/users/${userId}` method="POST").profile
+            div.labelInputWrapper.profile-item
+                label(for="email") Email:
+                input#email(type="text" name="email" disabled=true value=user.email)
+            div
+            div.labelInputWrapper.profile-item
+                label(for="given_name") Imię:
+                input#given_name(type="text" name="given_name" value=user.given_name placeholder="Imię")
+            div.labelInputWrapper.profile-item
+                label(for="surname") Nazwisko:
+                input#surname(type="text" name="surname" value=user.surname placeholder="Nazwisko")
+            div.labelInputWrapper.profile-item
+                label(for="phone") Numer Telefonu:
+                input#phone(type="text" name="phone" value=user.phone placeholder="444 555 666")
+            div.labelInputWrapper.profile-item
+                label(for="address") Adres:
+                input#address(type="text" name="address" value=user.address placeholder="Kalwaryjska 123, Warszawa")
+
+            a(href="/login/logout" class="logout-button") Wyloguj się
+            button(type="submit").formButton Zapisz

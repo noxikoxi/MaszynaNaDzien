@@ -11,17 +11,18 @@ html
             a(href='/')#logo.info.text-md MaszynaNaDzień
             nav
                 ul
-                    if nav.users
+                    if isAdmin
                         li
                             a(href='/users').info Użytkownicy
-                    if nav.reservations
+                    if isLoggedIn && !isAdmin
                         li
-                            a(href='/reservations').info Rezerwacje
-                    if nav.machines
+                            a(href='/reservations').info Moje Rezerwacje
+                    li
+                        a(href='/reservations').info Rezerwacje
+                    li
+                        a(href='/machines').info Maszyny
+                    if isLoggedIn
                         li
-                            a(href='/machines').info Maszyny
-                    if nav.user
-                        li
-                            a(href='/user').info Profil
+                            a(href=`/users/${userId}`).info Profil
         div.middleContainer
             block content

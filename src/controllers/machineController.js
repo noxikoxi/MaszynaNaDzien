@@ -27,12 +27,6 @@ const getAll = async (req, res, sortOption) => {
 
         res.render('machines', {
             title: "Maszyny",
-            nav: {
-                users: false,
-                reservations: true,
-                machines: true,
-                user: false
-            },
             machines: formattedMachines
         })
     }catch (error){

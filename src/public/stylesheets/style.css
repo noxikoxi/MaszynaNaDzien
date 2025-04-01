@@ -35,6 +35,11 @@ body {
   align-items: center;
 }
 
+.danger{
+  color: var(--danger-color);
+  font-weight: 500;
+}
+
 .container {
   background-color: var(--primary-color);
   border-radius: 20px;
@@ -80,3 +85,4 @@ a{
   font-size: 2.5rem;
   letter-spacing: 0.2em;
 }
+

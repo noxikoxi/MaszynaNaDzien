@@ -26,18 +26,20 @@ const getUserInfo = async (req, res) => {
     try {
         const userId = req.params.userId;
 
-        const existingUser = await db.User.findOne({ where: { id: userId } });
-        if(!existingUser){
-            return res.status(200).json({message: "User with selected id not found"});
+        const existingUser = await db.User.findOne({
+            where: { id: userId },
+            attributes: { exclude: ['password_hash']}
+        });
+        if(!existingUser) {
+            res.render('error', { message: "User with selected ID not found", status: 404 });
         }
 
-        const userObject = existingUser.toJSON();
-
-        delete userObject.password;
-
-        return res.status(200).json(userObject);
+        res.render("profile", {
+            user: existingUser,
+            title: "Profil"
+        });
     }catch (error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
 
@@ -59,37 +61,40 @@ const deleteUser = async (req, res) => {
 
         return res.status(200).json({message: "Successfully deleted User"});
     }catch (error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
 
 const updateUserInfo = async (req, res) => {
     try{
         const userId = req.params.userId;
-        const { name, surname, phone, location} = req.body;
+        const { given_name, surname, phone, address} = req.body;
 
         const existingUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password']}
+            attributes: { exclude: ['password_hash']}
         });
 
         if(!existingUser){
-            return res.status(404).json({message: "User with selected id not found"});
+            res.render('error', { message: "User with selected ID not found", status: 404 });
         }
 
         await db.User.update(
-            { name, surname, phone, location},
+            { given_name, surname, phone, address},
             { where: { id: userId } }
         );
 
         const updatedUser = await db.User.findOne({
             where: { id: userId },
-            attributes: { exclude: ['password'] }
+            attributes: { exclude: ['password_hash'] }
         });
 
-        return res.status(200).json(updatedUser);
+        res.render("profile", {
+            user: updatedUser,
+            title: "Profil"
+        });
     }catch (error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
 

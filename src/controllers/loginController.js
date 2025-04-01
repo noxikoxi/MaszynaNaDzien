@@ -7,14 +7,35 @@ const login = async (req, res) => {
             where: { email }
         });
 
-        if (!user || !(await compare(password, user.password))) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+        if (!user || !(await compare(password, user.password_hash))) {
+            return res.render("login", { message: 'Nieprawidłowe dane logowania' });
         }
 
-        return res.status(200).json({ message: 'Login successful' });
+        req.session.userId = user.id;
+        req.session.isAdmin = user.is_admin;
+
+        res.redirect(`/users/${user.id}`);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 };
 
-module.exports = {login}
+const checkLogin = async (req, res) => {
+    if (req.session && req.session.userId) {
+        res.redirect(`/users/${req.session.userId}`);
+    }else{
+        res.render('login', {title: "login"});
+    }
+}
+
+const logout = async (req, res) => {
+    delete res.locals.isAdmin;
+    req.session.destroy(err => {
+        if (err) {
+            return res.render('error',{message: "Błąd przy wylogowywaniu"});
+        }
+        res.redirect('/login');
+    });
+};
+
+module.exports = {login, checkLogin, logout}

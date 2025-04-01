@@ -1,23 +1,17 @@
 var express = require('express');
 var router = express.Router();
 
-var reservationsService = require('../controllers/reservationsController');
+var reservationsController = require('../controllers/reservationsController');
 
-router.get('/', function(req, res, next) {
-    const sortOption = req.query.sortOption;
-    reservationsService.getAll(req, res, sortOption);
-});
+router.get('/', reservationsController.getAll);
 
-router.get('/user/:userId', function(req, res, next) {
-    const sortOption = req.query.sortOption;
-    reservationsService.getUserReservations(req, res, sortOption);
-});
+router.get('/user/:userId', reservationsController.getUserReservations);
 
-router.post('/:userId/:machineId', reservationsService.create);
+router.post('/:userId/:machineId', reservationsController.create);
 
-router.get('/:machineId', reservationsService.getMachineWithReservations);
+router.get('/:machineId', reservationsController.getMachineWithReservations);
 
-router.delete('/:reservationId', reservationsService.deleteReservation);
+router.delete('/:reservationId', reservationsController.deleteReservation);
 
 
 module.exports = router;

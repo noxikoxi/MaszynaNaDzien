@@ -87,3 +87,18 @@
 .reservation_machine{
     border-bottom: 2px solid var(--border-color);
 }
+
+.profile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap:20px;
+}
+
+.profile-item{
+    width: 100%;
+}
+
+.two-span{
+    grid-column: span 2;
+}

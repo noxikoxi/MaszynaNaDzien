@@ -5,12 +5,8 @@ const loginController = require('../controllers/loginController');
 
 router.post('/', loginController.login);
 
-router.get('/', (req, res, next) => {
-    res.render('login', {title: "login"});
-})
+router.get('/', loginController.checkLogin);
 
-router.delete('/logout', function(req, res, next) {
-    res.send(req.params);
-});
+router.get('/logout', loginController.logout);
 
 module.exports = router;

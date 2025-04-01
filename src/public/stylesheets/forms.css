@@ -30,6 +30,7 @@ form input {
     color: whitesmoke;
     font-weight: 100;
     padding: 8px;
+    cursor: pointer;
 }
 
 .sortSelect{
@@ -44,4 +45,20 @@ form input {
 
 .sortSelect option {
     font-weight: 500;
+}
+
+.profile-container{
+    width: min(80%, 600px);
+    margin-top: 50px;
+}
+
+.logout-button{
+    width: calc(100% - 16px);
+    background-color: var(--danger-color);
+    border-radius: 6px;
+    color: whitesmoke;
+    font-weight: 400;
+    padding: 8px;
+    cursor: pointer;
+    text-align: center;
 }

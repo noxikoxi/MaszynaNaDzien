@@ -3,6 +3,8 @@ extends middleLogoLayout
 block content
     div.container.loginContainer
         h3.info.text-md Logowanie
+        if message
+            p.danger #{message}
         form(method="POST" action="/login").loginForm
             div.labelInputWrapper
                 label(for="email") Email:
