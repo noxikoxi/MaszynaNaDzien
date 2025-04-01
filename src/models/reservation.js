@@ -14,13 +14,16 @@ const Reservation = sequelize.define(
             allowNull: false,
         },
         date_from: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         date_to: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         }
+    },{
+        timestamps: true,
+        updatedAt: false
     }
 )
 

@@ -1,40 +1,4 @@
-const bcrypt = require('bcrypt');
 const db = require('../models');
-const {response} = require("express");
-
-const register = async (req, res) => {
-    try {
-        const { name, surname, email, password, type_id} = req.body;
-
-        const existingUser = await db.User.findOne({ where: { email } });
-        if (existingUser){
-            return res.status(400).json({message: "Email already in use"});
-        }
-
-        const hashedPassword = await bcrypt.hash(password, 10);
-
-        const newUser = await db.User.create({ name, surname, email, password: hashedPassword, type_id});
-        return res.status(201).json({ message: 'User created', newUser });
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-};
-
-
-const login = async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await db.User.findOne({ where: { email } });
-
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        return res.status(200).json({ message: 'Login successful' });
-    } catch (error) {
-        return res.status(500).json({ error: error.message });
-    }
-};
 
 const getAllUser = async (req, res, sortOption) => {
     try {
@@ -81,7 +45,9 @@ const deleteUser = async (req, res) => {
     try{
         const userId = req.params.userId;
 
-        const existingUser = await db.User.findOne({ where: { id: userId } });
+        const existingUser = await db.User.findOne({
+            where: { id: userId }
+        });
 
         if(!existingUser){
             return res.status(200).json({message: "User with selected id not found"});
@@ -127,4 +93,4 @@ const updateUserInfo = async (req, res) => {
     }
 }
 
-module.exports = {register, login, getAllUser, deleteUser, getUserInfo, updateUserInfo};
+module.exports = {getAllUser, deleteUser, getUserInfo, updateUserInfo};

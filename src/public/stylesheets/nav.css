@@ -1,0 +1,21 @@
+.topBar {
+    background-color: var(--primary-color);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px rgba(0, 0, 0, 0.4);
+    padding: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+nav ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    gap: 2em;
+}
+
+nav ul li {
+    font-size: 1.2rem;
+    font-weight: 500;
+}

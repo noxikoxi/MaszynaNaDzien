@@ -21,7 +21,7 @@ const getAll = async (req, res, sortOption) => {
             include: [
                 {
                     model: db.User,
-                    attributes: ['name', 'surname']
+                    attributes: ['given_name', 'surname']
                 },
                 {
                     model: db.Machine,
@@ -38,7 +38,7 @@ const getAll = async (req, res, sortOption) => {
 
         switch (sortOption){
             case "byName":
-                reservations.sort((a, b) => a.User.name.localeCompare(b.User.name));
+                reservations.sort((a, b) => a.User.given_name.localeCompare(b.User.given_name));
                 break;
             case "byType":
                 reservations.sort((a, b) => a.Machine.MachineType.type.localeCompare(b.Machine.MachineType.type));
@@ -61,7 +61,7 @@ const getUserReservations = async (req, res, sortOption) => {
             },
             include: {
                 model: db.Machine,
-                attributes: ['name', 'type_id'],
+                attributes: ['given_name', 'type_id'],
                 include: [
                     {
                         model: db.MachineType,
@@ -73,7 +73,7 @@ const getUserReservations = async (req, res, sortOption) => {
 
         switch (sortOption){
             case "byName":
-                reservations.sort((a, b) => a.User.name.localeCompare(b.User.name));
+                reservations.sort((a, b) => a.User.given_name.localeCompare(b.User.given_name));
                 break;
             case "byType":
                 reservations.sort((a, b) => a.type.localeCompare(b.type));

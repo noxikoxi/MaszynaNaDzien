@@ -17,6 +17,9 @@ const Machine = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: true
         }
+    },
+    {
+        timestamps: false,
     }
 )
 

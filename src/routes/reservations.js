@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var reservationsService = require('../services/reservationsService');
+var reservationsService = require('../controllers/reservationsController');
 
 router.get('/', function(req, res, next) {
     const sortOption = req.query.sortOption;

@@ -9,18 +9,34 @@ const getAll = async (req, res, sortOption) => {
             }
         });
 
+        const formattedMachines = machines.map(machine => ({
+            id: machine.id,
+            name: machine.name,
+            description: machine.description,
+            type: machine.MachineType ? machine.MachineType.type : null
+        }));
+
         switch (sortOption){
             case "byName":
-                machines.sort((a, b) => a.name.localeCompare(b.name));
+                formattedMachines.sort((a, b) => a.name.localeCompare(b.name));
                 break;
             case "byType":
-                machines.sort((a, b) => a.type.localeCompare(b.type));
+                formattedMachines.sort((a, b) => a.type.localeCompare(b.type));
                 break;
         }
 
-        return res.status(200).json({ machines});
+        res.render('machines', {
+            title: "Maszyny",
+            nav: {
+                users: false,
+                reservations: true,
+                machines: true,
+                user: false
+            },
+            machines: formattedMachines
+        })
     }catch (error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
 

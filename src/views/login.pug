@@ -1,0 +1,15 @@
+extends middleLogoLayout
+
+block content
+    div.container.loginContainer
+        h3.info.text-md Logowanie
+        form(method="POST" action="/login").loginForm
+            div.labelInputWrapper
+                label(for="email") Email:
+                input#email(type="text" name="email" required)
+            div.labelInputWrapper
+                label(for="password") Hasło:
+                input#password(type="password" name="password" required)
+
+            button(type="submit").formButton Zaloguj się
+            a(href='/register').additionalInfo Nie masz jeszcze konta? Zarejestruj się!

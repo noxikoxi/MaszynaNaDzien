@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-const machineTypeService = require("../services/machineTypeService");
-const machineService = require("../services/machineService");
+const machineTypeService = require("../controllers/machineTypeController");
+const machineService = require("../controllers/machineController");
 
 router.get('/', async function(req, res, next) {
-    const sortOption = req.query.sortOption;
-    await machineService.getAll(req, res, sortOption);
+    const sort = req.query.sort;
+    machineService.getAll(req, res, sort);
 });
 
 router.delete('/:machineId', machineService.deleteMachine);

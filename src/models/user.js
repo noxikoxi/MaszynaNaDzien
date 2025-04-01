@@ -9,11 +9,12 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        type_id: {
-            type: DataTypes.INTEGER,
+        is_admin: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: 0
         },
-        name: {
+        given_name: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -24,6 +25,9 @@ const User = sequelize.define(
         email: {
             type: DataTypes.STRING,
             allowNull: false,
+            validate: {
+                isEmail: true
+            }
         },
         location: {
             type: DataTypes.STRING,
@@ -33,11 +37,14 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
         }
+    },
+    {
+        timestamps: true,
+        updatedAt: false
     }
 )
 
 User.associate = (models) => {
-    User.belongsTo(models.UserType, { foreignKey: "type_id" });
     User.hasMany(models.Reservation, { foreignKey: "user_id", onDelete: "CASCADE" });
 };
 

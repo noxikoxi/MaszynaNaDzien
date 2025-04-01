@@ -1,0 +1,47 @@
+.loginForm {
+    display: flex;
+    width: min(80%, 500px);
+    min-height: 250px;
+    flex-direction: column;
+    gap:1em;
+}
+
+form input {
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    height: 25px;
+}
+
+.labelInputWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+.additionalInfo{
+    text-decoration: underline;
+    font-size: small;
+    margin-top: 10px;
+}
+
+.formButton{
+    background-color: var(--secondary-color);
+    border-radius: 6px;
+    color: whitesmoke;
+    font-weight: 100;
+    padding: 8px;
+}
+
+.sortSelect{
+    padding: 8px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    letter-spacing: 1px;
+}
+
+.sortSelect option {
+    font-weight: 500;
+}

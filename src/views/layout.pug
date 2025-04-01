@@ -1,7 +1,27 @@
 doctype html
 html
-  head
-    title #{title}
-    link(rel='stylesheet', href='/stylesheets/style.css')
-  body
-    block content
+    head
+        title #{title}
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='/stylesheets/forms.css')
+        link(rel='stylesheet', href='/stylesheets/nav.css')
+        link(rel='stylesheet', href='/stylesheets/grid.css')
+    body
+        div.topBar
+            a(href='/')#logo.info.text-md MaszynaNaDzień
+            nav
+                ul
+                    if nav.users
+                        li
+                            a(href='/users').info Użytkownicy
+                    if nav.reservations
+                        li
+                            a(href='/reservations').info Rezerwacje
+                    if nav.machines
+                        li
+                            a(href='/machines').info Maszyny
+                    if nav.user
+                        li
+                            a(href='/user').info Profil
+        div.middleContainer
+            block content
