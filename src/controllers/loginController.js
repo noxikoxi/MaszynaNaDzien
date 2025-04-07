@@ -8,7 +8,7 @@ const login = async (req, res) => {
         });
 
         if (!user || !(await compare(password, user.password_hash))) {
-            return res.render("login", { message: 'Nieprawidłowe dane logowania' });
+            return res.render("login", { errors:[ {msg: 'Nieprawidłowe dane logowania'} ]});
         }
 
         req.session.userId = user.id;

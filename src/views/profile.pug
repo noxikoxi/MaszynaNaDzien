@@ -5,20 +5,20 @@ block content
             h1.info Profil Użytkownika
         hr
         form(action=`/users/${userId}` method="POST").profile
-            div.labelInputWrapper.profile-item
+            div.labelInputWrapper.w100
                 label(for="email") Email:
                 input#email(type="text" name="email" disabled=true value=user.email)
             div
-            div.labelInputWrapper.profile-item
+            div.labelInputWrapper.w100
                 label(for="given_name") Imię:
                 input#given_name(type="text" name="given_name" value=user.given_name placeholder="Imię")
-            div.labelInputWrapper.profile-item
+            div.labelInputWrapper.w100
                 label(for="surname") Nazwisko:
                 input#surname(type="text" name="surname" value=user.surname placeholder="Nazwisko")
-            div.labelInputWrapper.profile-item
+            div.labelInputWrapper.w100
                 label(for="phone") Numer Telefonu:
                 input#phone(type="text" name="phone" value=user.phone placeholder="444 555 666")
-            div.labelInputWrapper.profile-item
+            div.labelInputWrapper.w100
                 label(for="address") Adres:
                 input#address(type="text" name="address" value=user.address placeholder="Kalwaryjska 123, Warszawa")
 

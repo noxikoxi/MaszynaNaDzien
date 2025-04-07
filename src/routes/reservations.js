@@ -1,17 +1,27 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var reservationsController = require('../controllers/reservationsController');
+const reservationsController = require('../controllers/reservationsController');
+const validator = require("../validators/reservationsDatesValidator");
+const {validationResult} = require("express-validator");
 
 router.get('/', reservationsController.getAll);
 
-router.get('/user/:userId', reservationsController.getUserReservations);
+router.get('/user', async(req, res) => {
+    await reservationsController.getUserReservations(req, res);
+});
 
-router.post('/:userId/:machineId', reservationsController.create);
+router.post('/:machineId', validator, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return reservationsController.getUserReservations(req, res, errors.array());
+    }
+    return reservationsController.create(req, res);
+});
 
 router.get('/:machineId', reservationsController.getMachineWithReservations);
 
-router.delete('/:reservationId', reservationsController.deleteReservation);
+router.get('/delete/:reservationId', reservationsController.deleteReservation);
 
 
 module.exports = router;

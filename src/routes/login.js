@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 const loginController = require('../controllers/loginController');
+const validator = require("../validators/loginValidator");
+const {validationResult} = require("express-validator");
 
-router.post('/', loginController.login);
+router.post('/', validator , async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.render('login', {title: "login", errors: errors.array()});
+    }
+    await loginController.login(req, res);
+});
 
 router.get('/', loginController.checkLogin);
 

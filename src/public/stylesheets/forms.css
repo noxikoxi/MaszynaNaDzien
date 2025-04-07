@@ -6,9 +6,17 @@
     gap:1em;
 }
 
-form input {
+form input, textarea {
     border-radius: 6px;
     border: 1px solid var(--border-color);
+    padding: 5px;
+}
+
+textarea{
+    max-width: 100%;
+}
+
+form input {
     height: 25px;
 }
 
@@ -61,4 +69,16 @@ form input {
     padding: 8px;
     cursor: pointer;
     text-align: center;
+}
+
+.onlyText{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.columnForm{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
 }

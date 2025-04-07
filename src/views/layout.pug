@@ -8,7 +8,7 @@ html
         link(rel='stylesheet', href='/stylesheets/grid.css')
     body
         div.topBar
-            a(href='/')#logo.info.text-md MaszynaNaDzień
+            a(href='/')#logo.info.text-lg MaszynaNaDzień
             nav
                 ul
                     if isAdmin
@@ -16,7 +16,7 @@ html
                             a(href='/users').info Użytkownicy
                     if isLoggedIn && !isAdmin
                         li
-                            a(href='/reservations').info Moje Rezerwacje
+                            a(href='/reservations/user').info Moje Rezerwacje
                     li
                         a(href='/reservations').info Rezerwacje
                     li

@@ -1,9 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const {validationResult } = require('express-validator');
+const router = express.Router();
 
 const registerController = require('../controllers/registerController');
+const validator = require("../validators/registerValidator");
 
-router.post('/', registerController.register);
+router.post('/', validator, async (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.render('register', {title: "register", errors: errors.array()});
+        }
+        await registerController.register(req, res);
+    });
 
 router.get('/', (req, res, next) => {
     res.render('register', {title: "register"});

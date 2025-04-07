@@ -1,7 +1,7 @@
 extends layout
 block content
     div.grid-header
-        h3.info.text-md.title Nasze Maszyny
+        h3.info.text-lg.title Nasze Maszyny
         form(action="/machines", method="GET")
             select(name="sort", id="sort" onchange="this.form.submit()").sortSelect.text-sm
                 option(value="", selected=true, hidden=true) Sortuj
@@ -12,6 +12,11 @@ block content
         div.grid-container
             each machine in machines
                 div.machine-item.grid-item
-                    div.machine-type.center-content #{machine.type}
+                    if isLoggedIn
+                        div.machine-type.center-content #{machine.type}
+                        div.machine-reserve.center-content
+                            a(href="reservations/" + machine.id).text-green.text-bold Zarezerwuj
+                    else
+                        div.machine-type.center-content.rowspan2 #{machine.type}
                     div.machine-name.center-content #{machine.name}
                     div.machine-description.center-content #{machine.description}

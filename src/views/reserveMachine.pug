@@ -1,0 +1,34 @@
+extends Layout
+block content
+    div.content-container.reserveContainers
+        div.container.reserveContainer
+            p.text-md.text-bold.info Rezerwacja Maszyny
+            hr
+            if errors && errors.length > 0
+                each error in errors
+                    p.danger #{error.msg}
+            form(action="/reservations/" + machine.id, method="POST").columnForm
+                div.labelInputWrapper.w100
+                    label(for="name") Nazwa:
+                    input#name(type="text" name="name" disabled=true value=machine.name)
+                div.labelInputWrapper.w100
+                    label(for="description") Opis:
+                    textarea#description(name="description" disabled=true) #{machine.description}
+                div.labelInputWrapper.w100
+                    label(for="date_from") Początek rezerwacji:
+                    input#date_from(type="date" name="date_from" value="data")
+                div.labelInputWrapper.w100
+                    label(for="date_to") Koniec rezerwacji:
+                    input#date_to(type="date" name="date_to" value="data")
+
+                button(type="submit", style="margin: 20px 0 20px 0").formButton Zarezerwuj Maszynę
+        div.container.reserveContainer
+            p.text-md.text-bold.info Aktualne Rezerwacje
+            hr
+            each reservation, i in reservations
+                if i % 2 === 0
+                    div.w100.listBlock
+                        span.text-md #{reservation.date_from} - #{reservation.date_to}
+                else
+                    div.w100.inverseColor.listBlock
+                        span.text-md #{reservation.date_from} - #{reservation.date_to}

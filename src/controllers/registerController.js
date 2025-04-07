@@ -8,15 +8,19 @@ const register = async (req, res) => {
             where: { email }
         });
         if (existingUser){
-            return res.status(400).json({message: "Email already in use"});
+            return res.render('register', {title: "register", errors: [
+                    {
+                        msg: "Użytkownik o takim adresie email już istnieje"
+                    }
+                ]});
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = await db.User.create({email, password_hash: hashedPassword, type_id});
-        return res.status(201).json({ message: 'User created', newUser });
+        res.redirect(`/users/${user.id}`);
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 };
 
