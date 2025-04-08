@@ -11,6 +11,7 @@ const reservationsRouter = require('./routes/reservations');
 const machinesRouter = require('./routes/machines');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
+const adminRouter = require("./routes/admin");
 
 const checkLoggedIn = require('./middlewares/checkLoggedIn');
 
@@ -47,6 +48,7 @@ app.use('/reservations', reservationsRouter);
 app.use('/machines', machinesRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

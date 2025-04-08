@@ -1,28 +1,67 @@
 const db = require('../models');
+const bcrypt = require("bcrypt");
 
-const getAllUser = async (req, res, sortOption) => {
+const createUser = async(req, res) => {
+    try{
+        const {email, password, given_name, surname, phone, address, is_admin} = req.body;
+
+        const existingUser = await db.User.findOne({
+            where: { email }
+        });
+        if (existingUser){
+            return res.render('adminCreateUser', {title: "Dodaj Użytkownika", errors: [
+                    {
+                        msg: "Użytkownik o takim adresie email już istnieje"
+                    }
+                ]});
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await db.User.create({email, password_hash: hashedPassword, given_name, surname, phone, address, is_admin});
+        res.redirect("/admin/users");
+    }catch (error){
+        res.render('error', { message: error.message, status: 500 });
+    }
+}
+
+const getAllUsers = async (req, res, sortOption) => {
     try {
         const users = await db.User.findAll();
 
         switch (sortOption){
-            case "byName":
-                users.sort((a, b) => a.name.localeCompare(b.name));
+            case "byEmail":
+                users.sort((a, b) => a.email.localeCompare(b.email));
                 break;
             case "bySurname":
-                users.sort((a, b) => a.surname.localeCompare(b.surname));
+                users.sort((a, b) =>
+                {
+                    if (!a.surname && !b.surname) {
+                        return 0; // Remis
+                    }
+                    if (!a.surname) {
+                        return 1;
+                    }
+                    if (!b.surname) {
+                        return -1;
+                    }
+                    a.surname.localeCompare(b.surname)
+                });
                 break;
-            case "byRegisterTime":
+            case "byDate":
                 users.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+                break;
+            default:
                 break;
         }
 
-        return res.status(200).json({ users});
+        res.render('users', {title: "Użytkownicy", users});
     }catch (error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
 
-const getUserInfo = async (req, res) => {
+const getUserInfo = async (req, res, errors) => {
     try {
         const userId = req.params.userId;
 
@@ -36,7 +75,8 @@ const getUserInfo = async (req, res) => {
 
         res.render("profile", {
             user: existingUser,
-            title: "Profil"
+            title: "Profil",
+            errors: errors ? errors : null
         });
     }catch (error){
         res.render('error', { message: error.message, status: 500 });
@@ -52,14 +92,14 @@ const deleteUser = async (req, res) => {
         });
 
         if(!existingUser){
-            return res.status(200).json({message: "User with selected id not found"});
+            return res.render('error', { message: "User with selected id not found", status: 404 });
         }
 
         await db.User.destroy({
             where: { id: userId }
         });
 
-        return res.status(200).json({message: "Successfully deleted User"});
+        res.redirect("/admin/users");
     }catch (error){
         res.render('error', { message: error.message, status: 500 });
     }
@@ -98,4 +138,4 @@ const updateUserInfo = async (req, res) => {
     }
 }
 
-module.exports = {getAllUser, deleteUser, getUserInfo, updateUserInfo};
+module.exports = {getAllUsers, deleteUser, getUserInfo, updateUserInfo, createUser};

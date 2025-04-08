@@ -1,0 +1,32 @@
+extends layout
+block content
+    div.container.profile-container
+        div.center-content
+            h1.info Dodaj Użytkownika
+        hr
+        if errors && errors.length > 0
+            each error in errors
+                p.danger #{error.msg}
+        form(action=`/admin/users/create` method="POST").profile
+            div.labelInputWrapper.w100
+                label(for="email") Email:
+                input#email(type="text" name="email" placeholder="email")
+            div.w100.labelInputWrapper
+                label(for="password") Hasło
+                input#password(type="text" name="password" placeholder="hasło")
+            div.labelInputWrapper.w100
+                label(for="given_name") Imię:
+                input#given_name(type="text" name="given_name" placeholder="Imię")
+            div.labelInputWrapper.w100
+                label(for="surname") Nazwisko:
+                input#surname(type="text" name="surname" placeholder="Nazwisko")
+            div.labelInputWrapper.w100
+                label(for="phone") Numer Telefonu:
+                input#phone(type="text" name="phone" placeholder="444 555 666")
+            div.labelInputWrapper.w100
+                label(for="address") Adres:
+                input#address(type="text" name="address" placeholder="Kalwaryjska 123, Warszawa")
+            div.w100.checkboxWrapper
+                input#is_admin(type="checkbox" name="is_admin" value="no")
+                label(for="is_admin").text-md Administrator
+            button(type="submit").formButton Stwórz Konto

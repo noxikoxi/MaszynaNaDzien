@@ -1,0 +1,55 @@
+extends layout
+block content
+    div.machineAddContainer
+        div.column
+            if errors && errors.length > 0
+                each error in errors
+                    p.danger #{error.msg}
+            div.container
+                div.center-content
+                    h1.info Dodaj Maszynę
+                hr
+                form(action=`/admin/machines/create` method="POST").machineAddForm
+                    div.labelInputWrapper.machineAddItem
+                        label(for="type_id") Typ Maszyny:
+                        select#type_id(name="type_id").text-sm
+                            each type in types
+                                option(value=type.id) #{type.type}
+                    div.labelInputWrapper.machineAddItem
+                        label(for="description") Opis Maszyny:
+                        textarea#description(name="description")
+                    div.labelInputWrapper.machineAddItem
+                        label(for="name") Nazwa Maszyny:
+                        input#name(type="text" name="name")
+                    button(type="submit").formButton.machineAddItem Dodaj Maszynę
+            div.row
+                div#listTypes.container
+                    div.listHeader
+                        h1.info Lista Typów
+                    hr
+                    table
+                        thead.inverseColor
+                            tr
+                                th ID
+                                th Nazwa
+                                th Usuń
+                        tbody
+                            each type, i in types
+                                tr(class=(i % 2 === 0 ? '' : 'inverseColor'))
+                                    td #{type.id}
+                                    td #{type.type}
+                                    td
+                                        form(action="/admin/type/delete/" + type.id method="GET" onsubmit="return confirm('Czy na pewno chcesz usunąć ten typ maszyny?');")
+                                            button(type="submit").onlyText
+                                                img(src="/images/delete-icon.png" alt="Usuń").deleteIcon
+                div.container#addType
+                    div.listHeader
+                        h1.info Dodaj Typ Maszyny
+                    hr
+                    form(action=`/admin/type/create` method="POST").columnForm
+                        div.labelInputWrapper.machineAddItem
+                            label(for="type") Typ Maszyny:
+                            input#type(type="text" name="type")
+                        button(type="submit").formButton.machineAddItem Dodaj Typ
+
+

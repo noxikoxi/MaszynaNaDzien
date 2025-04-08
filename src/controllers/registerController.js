@@ -2,7 +2,7 @@ const db = require("../models");
 const bcrypt = require("bcrypt");
 const register = async (req, res) => {
     try {
-        const {email, password, type_id} = req.body;
+        const {email, password} = req.body;
 
         const existingUser = await db.User.findOne({
             where: { email }
@@ -17,7 +17,7 @@ const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = await db.User.create({email, password_hash: hashedPassword, type_id});
+         await db.User.create({email, password_hash: hashedPassword});
         res.redirect(`/users/${user.id}`);
     } catch (error) {
         res.render('error', { message: error.message, status: 500 });

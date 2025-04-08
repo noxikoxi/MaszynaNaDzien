@@ -5,26 +5,33 @@ const create = async (req, res) => {
         let { type } = req.body;
         type = type.toLowerCase();
 
-        const existingType = await db.MachineType.findOne({ where: { type } });
+        const existingType = await db.MachineType.findOne({
+            where: { type }
+        });
 
         if (existingType){
-            return res.status(400).json({message: "Type already exists"});
+            return getAll(req, res, [{ msg: 'Typ już istnieje.' }]);
         }
 
-        const newType = await db.MachineType.create({ type});
-        return res.status(201).json({ message: 'MachineType created', newType });
+        await db.MachineType.create({ type});
+
+        res.redirect("/admin/machines/create");
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 };
 
-const getAll = async (req, res) => {
+const getAll = async (req, res, errors) => {
     try {
         const existingTypes = await db.MachineType.findAll();
 
-        return res.status(200).json(existingTypes);
+        res.render("adminMachineCreate", {
+            types:existingTypes,
+            title: "Dodaj Maszynę",
+            errors: errors ? errors : null
+        });
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 };
 
@@ -33,15 +40,15 @@ const deleteType = async (req, res) => {
         const machineTypeId = req.params.machineTypeId;
         const existingType = await db.MachineType.findOne({ where: { id: machineTypeId } });
         if(!existingType){
-            return res.status(404).json({message: "Type with selected id not found"});
+            return res.render('error', { message: "Type with selected id not found", status: 404 });
         }
         await db.MachineType.destroy({
             where: { id: machineTypeId }
         });
 
-        return res.status(200).json({message: "Succesfully deleted machineType"});
+        res.redirect("/admin/machines/create");
     } catch (error) {
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 };
 

@@ -2,13 +2,13 @@ extends layout
 block content
     div.grid-header
         h3.info.text-lg.title Nasze Maszyny
-        form(action="/machines", method="GET")
-            select(name="sort", id="sort" onchange="this.form.submit()").sortSelect.text-sm
+        form(method="GET")
+            select(name="sortOption", id="sortOption" onchange="this.form.submit()").button-like.text-sm
                 option(value="", selected=true, hidden=true) Sortuj
                 option(value='byId') Domyślne
                 option(value='byName') Nazwa
                 option(value="byType") Typ
-    div.content-container
+    div.w80
         div.grid-container
             each machine in machines
                 div.machine-item.grid-item

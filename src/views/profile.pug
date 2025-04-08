@@ -4,6 +4,9 @@ block content
         div.center-content
             h1.info Profil Użytkownika
         hr
+        if errors && errors.length > 0
+            each error in errors
+                p.danger #{error.msg}
         form(action=`/users/${userId}` method="POST").profile
             div.labelInputWrapper.w100
                 label(for="email") Email:

@@ -1,6 +1,6 @@
 const db = require('../models');
 
-const getAll = async (req, res, sortOption) => {
+const getAll = async (req, res, sortOption, isAdmin=false) => {
     try {
         const machines = await db.Machine.findAll({
             include: {
@@ -24,11 +24,18 @@ const getAll = async (req, res, sortOption) => {
                 formattedMachines.sort((a, b) => a.type.localeCompare(b.type));
                 break;
         }
+        if(isAdmin){
+            res.render('adminMachines', {
+                title: "Maszyny",
+                machines: formattedMachines
+            })
 
-        res.render('machines', {
-            title: "Maszyny",
-            machines: formattedMachines
-        })
+        }else {
+            res.render('machines', {
+                title: "Maszyny",
+                machines: formattedMachines
+            })
+        }
     }catch (error){
         res.render('error', { message: error.message, status: 500 });
     }
@@ -38,12 +45,66 @@ const create = async (req, res) => {
     try{
         const { name, description, type_id} = req.body;
 
-        const newMachine = await db.Machine.create({ name, description, type_id});
-        return res.status(201).json({ message: 'Machine created', newMachine });
+        await db.Machine.create({ name, description, type_id});
+        res.redirect("/admin/machines");
     }catch (error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
+
+const updateMachine = async (req, res) => {
+    try{
+        const id = req.params.machineId;
+        const {name, type_id, description} = req.body;
+
+        const existingMachine = await db.Machine.findOne({
+            where: { id: id }
+        });
+
+        if(!existingMachine){
+            res.render('error', { message: "Machine with selected ID not found", status: 404 });
+        }
+
+        const types = await db.MachineType.findAll();
+
+        await db.Machine.update(
+            { name, type_id, description},
+            { where: { id: id } }
+        );
+
+        const updatedMachine = await db.Machine.findOne({
+            where: { id: id },
+        });
+
+        res.redirect("/admin/machines/edit/" + id);
+    }catch (error){
+        res.render('error', { message: error.message, status: 500 });
+    }
+}
+
+const getMachineWithTypes = async (req, res) => {
+    try{
+        const id = req.params.machineId;
+        const machine = await db.Machine.findOne({
+            where: { id: id }
+        });
+
+        if(!machine){
+            res.render('error', { message: "Machine with selected ID not found", status: 404 });
+        }
+
+        const types = await db.MachineType.findAll();
+
+        res.render("adminEditMachine", {
+            machine: machine,
+            types,
+            title: "Edycja Maszyny"
+        });
+    }catch (error){
+        res.render('error', { message: error.message, status: 500 });
+    }
+}
+
 
 const deleteMachine = async (req, res) => {
     try{
@@ -52,18 +113,18 @@ const deleteMachine = async (req, res) => {
         const existingMachine = await db.Machine.findOne({ where: { id: machineId } });
 
         if(!existingMachine){
-            return res.status(404).json({message: "Machine with selected id not found"});
+            return res.render('error', { message: "Machine with selected id not found", status: 404 });
         }
 
         await db.Machine.destroy({
             where: { id: machineId }
         });
 
-        return res.status(200).json({message: "Successfully deleted machine"});
+        res.redirect("/admin/machines");
     }catch (error){
-        return res.status(500).json({ error: error.message });
+        res.render('error', { message: error.message, status: 500 });
     }
 }
 
 
-module.exports = {getAll, create, deleteMachine};
+module.exports = {getAll, create, deleteMachine, updateMachine, getMachineWithTypes};

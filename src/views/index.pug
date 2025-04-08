@@ -8,13 +8,21 @@ html
       a(href='/')
         p#logo.mainText.info MaszynaNaDzień
       if isLoggedIn
-        a(href=`/users/${userId}`)
-          p.mainText.info Profil Użytkownika
+        if isAdmin
+          a(href=`/admin/users`)
+            p.mainText.info Użytkownicy
+        else
+          a(href=`/users/${userId}`)
+            p.mainText.info Profil Użytkownika
       else
         a(href='/login')
           p.mainText.info Zaloguj Się
-      a(href='/machines')
-        p.mainText.info Dostepne Maszyny
+      if isAdmin
+        a(href='/admin/machines')
+          p.mainText.info Maszyny
+      else
+        a(href='/machines')
+          p.mainText.info Dostepne Maszyny
       a(href='/reservations')
         p.mainText.info Aktualne Rezerwacje
 

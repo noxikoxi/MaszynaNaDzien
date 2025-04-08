@@ -1,6 +1,5 @@
 const db = require('../models');
 const {Op} = require("sequelize");
-const e = require("express");
 
 const create = async (req, res) => {
     try {
@@ -17,39 +16,53 @@ const create = async (req, res) => {
                 machine_id: machineId,
                 [Op.and]: [
                     {
-                        date_from: { [Op.lte]: req.body.date_to } // istniejący od <= nowy do
+                        date_from: { [Op.lte]: req.body.date_to }
                     },
                     {
-                        date_to: { [Op.gte]: req.body.date_from } // istniejący do >= nowy od
+                        date_to: { [Op.gte]: req.body.date_from }
                     }
                 ]
             }
         });
 
         if (overlapping) {
-            return getUserReservations(req, res, [{ msg: 'Maszyna jest już zarezerwowana w tym przedziale czasu.' }])
+            return getMachineWithReservations(req, res, [{ msg: 'Maszyna jest już zarezerwowana w tym przedziale czasu.' }])
         }
 
 
         await db.Reservation.create({date_from, date_to, user_id: userId, machine_id: machineId});
 
-        res.render("reservations",{title: "Moje Rezerwacje"});
+        return getUserReservations(req, res, []);
     }catch(error){
         res.render('error', { message: error.message, status: 500 });
     }
 
 }
 
-const sortReservations = (reservations) => {
-    reservations.sort((a, b) => {
-        const dateA = new Date(a.date_from);
-        const dateB = new Date(b.date_from);
-        return dateA - dateB;
-    });
+const sortReservations = (reservations, sortOption) => {
+    switch (sortOption){
+        default:
+            reservations.sort((a, b) => {
+                const dateA = new Date(a.date_from);
+                const dateB = new Date(b.date_from);
+                return dateA - dateB;
+            });
+            break;
+        case "byMachineType":
+            reservations.sort((a, b) => a.Machine.MachineType.type.localeCompare(b.Machine.MachineType.type));
+            break;
+        case "byMachineName":
+            reservations.sort((a, b) => a.Machine.name.localeCompare(b.Machine.name));
+            break;
+        case "byUserEmail":
+            reservations.sort((a, b) => a.User.email.localeCompare(b.User.email));
+            break;
+    }
+
 }
 
-const formatReservations = (reservations, user_id) => {
-    sortReservations(reservations);
+const formatReservations = (reservations, user_id, sortOption) => {
+    sortReservations(reservations, sortOption);
 
     return reservations.map(reservation => ({
         id: reservation.id,
@@ -61,7 +74,7 @@ const formatReservations = (reservations, user_id) => {
     }));
 }
 
-const getAll = async (req, res) => {
+const getAll = async (req, res, sortOption) => {
     try {
         const reservations = await db.Reservation.findAll({
             include: [
@@ -82,7 +95,7 @@ const getAll = async (req, res) => {
             ]
         });
 
-        const formattedReservations = formatReservations(reservations);
+        const formattedReservations = formatReservations(reservations, null, sortOption);
 
         res.render('reservations', {
             title: "Rezerwacje",
@@ -94,7 +107,7 @@ const getAll = async (req, res) => {
     }
 }
 
-const getUserReservations = async (req, res, errors) => {
+const getUserReservations = async (req, res, sortOption) => {
     try {
         if (!req.session || !req.session.userId){
             return res.render('error', { message: "No session found", status: 400 });
@@ -117,20 +130,23 @@ const getUserReservations = async (req, res, errors) => {
             }
         });
 
-        const formattedReservations = formatReservations(reservations, userId);
+        if(sortOption === "byUserEmail"){
+            sortOption = "byDate";
+        }
+
+        const formattedReservations = formatReservations(reservations, userId, sortOption);
 
         res.render('reservations', {
             title: "Moje Rezerwacje",
             reservations: formattedReservations,
-            userView: true,
-            errors: errors ? errors : null
+            userView: true
         })
     }catch(error){
         res.render('error', { message: error.message, status: 500 });
     }
 }
 
-const getMachineWithReservations = async (req, res) => {
+const getMachineWithReservations = async (req, res, errors) => {
     try {
         const machineId = req.params.machineId;
         const machine = await db.Machine.findOne({
@@ -149,7 +165,12 @@ const getMachineWithReservations = async (req, res) => {
                 }
             ]
         });
-        res.render("reserveMachine", {title: "Rezerwuj", reservations, machine});
+        res.render("reserveMachine", {
+            title: "Rezerwuj",
+            reservations,
+            machine,
+            errors: errors ? errors : null
+        });
     }catch(error){
         res.render('error', { message: error.message, status: 500 });
     }

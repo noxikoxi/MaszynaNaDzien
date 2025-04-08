@@ -7,33 +7,30 @@ block content
                 select(name="sortOption", id="sortOption" onchange="this.form.submit()").button-like.text-sm
                     option(value="", selected=true, hidden=true) Sortuj
                     option(value='byId') Domyślne (ID)
-                    option(value='byEmail') Email
-                    option(value="bySurname") Nazwisko
-                    option(value="byDate") Data Utworzenia
+                    option(value='byType') Typ
+                    option(value="byName") Nazwa
             p.info.text-lg #{title}
 
-            a(href="/admin/users/create").button-like Dodaj Użytkownika
+            a(href="/admin/machines/create").button-like Dodaj Maszynę
         div.container
             table
                 thead.inverseColor
                     tr
                         th ID
-                        th Imie
-                        th Nazwisko
-                        th Email
-                        th Telefon
+                        th Typ
+                        th Nazwa
+                        th Opis
                         th Usuń
                 tbody
-                    each user, i in users
+                    each machine, i in machines
                         tr(class=(i % 2 === 0 ? '' : 'inverseColor'))
-                            td #{user.id}
-                            td #{user.given_name}
-                            td #{user.surname}
-                            td #{user.email}
-                            td #{user.phone}
                             td
-                                form(action="/admin/users/delete/" + user.id method="GET" onsubmit="return confirm('Czy na pewno chcesz usunąć tego użytkownika?');")
+                                a(href="/admin/machines/edit/" + machine.id) #{machine.id}
+                            td #{machine.type}
+                            td #{machine.name}
+                            td #{machine.description}
+                            td
+                                form(action="/admin/machines/delete/" + machine.id method="GET" onsubmit="return confirm('Czy na pewno chcesz usunąć tego użytkownika?');")
                                     button(type="submit").onlyText
                                         img(src="/images/delete-icon.png" alt="Usuń").deleteIcon
-
 

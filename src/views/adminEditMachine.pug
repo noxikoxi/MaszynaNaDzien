@@ -1,0 +1,23 @@
+extends layout
+block content
+    div.machineAddContainer
+        if errors && errors.length > 0
+            each error in errors
+                p.danger #{error.msg}
+        div.container
+            div.center-content
+                h1.info Edytuj Maszynę
+            hr
+            form(action=`/admin/machines/edit/`+machine.id method="POST").machineAddForm
+                div.labelInputWrapper.machineAddItem
+                    label(for="type_id") Typ Maszyny:
+                    select#type_id(name="type_id").text-sm
+                        each type in types
+                            option(value=type.id selected=type.id===machine.type_id) #{type.type}
+                div.labelInputWrapper.machineAddItem
+                    label(for="description") Opis Maszyny:
+                    textarea#description(name="description") #{machine.description}
+                div.labelInputWrapper.machineAddItem
+                    label(for="name") Nazwa Maszyny:
+                    input#name(type="text" name="name" value=machine.name placeholder="nazwa")
+                button(type="submit").formButton.machineAddItem Zapisz

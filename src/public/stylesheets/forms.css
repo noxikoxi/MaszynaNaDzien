@@ -13,6 +13,7 @@ form input, textarea {
 }
 
 textarea{
+    min-width: 200px;
     max-width: 100%;
 }
 
@@ -24,6 +25,17 @@ form input {
     display: flex;
     flex-direction: column;
     gap: 0.3em;
+}
+
+.checkboxWrapper{
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.5);
 }
 
 .additionalInfo{
@@ -41,7 +53,7 @@ form input {
     cursor: pointer;
 }
 
-.sortSelect{
+.button-like{
     padding: 8px;
     background-color: var(--primary-color);
     border: 1px solid var(--border-color);
@@ -51,7 +63,7 @@ form input {
     letter-spacing: 1px;
 }
 
-.sortSelect option {
+select option {
     font-weight: 500;
 }
 

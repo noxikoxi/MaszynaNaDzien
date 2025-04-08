@@ -3,23 +3,24 @@
 
 :root {
   --primary-color: #D9D9D9;
-  --secondary-color: #3D3D4B;
+  --secondary-color: #3d3d4b;
   --text-color: #0B0A0A;
   --border-color: #010101;
   --danger-color: #A6191B;
   --green-color: #047015;
-  --table-row-color: #ABAAAA;
+  --table-row-color: rgba(171, 170, 170, 0.78);
 }
 
 html{
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
 
 body {
   margin: 0;
   padding: 0;
-  height: 100vh;
+  height: 100%;
+  max-height: 100%;
   display: flex;
   flex-direction: column;
   /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
@@ -33,8 +34,9 @@ body {
   flex: 1;
   flex-direction: column;
   gap:1em;
-  /*justify-content: center;*/
   align-items: center;
+  max-height: 100%;
+  overflow: auto;
 }
 
 .danger{
@@ -118,6 +120,10 @@ a{
 
 .w100{
   width: 100%;
+}
+
+.w80{
+  width: 80%;
 }
 
 .inverseColor{

@@ -6,6 +6,7 @@ html
         link(rel='stylesheet', href='/stylesheets/forms.css')
         link(rel='stylesheet', href='/stylesheets/nav.css')
         link(rel='stylesheet', href='/stylesheets/grid.css')
+        link(rel='stylesheet', href='/stylesheets/admin.css')
     body
         div.topBar
             a(href='/')#logo.info.text-lg MaszynaNaDzień
@@ -13,14 +14,17 @@ html
                 ul
                     if isAdmin
                         li
-                            a(href='/users').info Użytkownicy
+                            a(href='/admin/users').info Użytkownicy
                     if isLoggedIn && !isAdmin
                         li
                             a(href='/reservations/user').info Moje Rezerwacje
                     li
                         a(href='/reservations').info Rezerwacje
                     li
-                        a(href='/machines').info Maszyny
+                        if isAdmin
+                            a(href='/admin/machines').info Maszyny
+                        else
+                            a(href='/machines').info Maszyny
                     if isLoggedIn
                         li
                             a(href=`/users/${userId}`).info Profil

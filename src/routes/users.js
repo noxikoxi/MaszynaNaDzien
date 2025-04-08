@@ -3,18 +3,19 @@ const router = express.Router();
 
 const userController = require("../controllers/usersController");
 const isAuthenticated = require("../middlewares/auth");
+const validator = require("../validators/userProfileValidator");
+const {validationResult} = require("express-validator");
 
-/* GET users listing. */
-router.get('/', async function(req, res, next) {
-  const sortOption = req.query.sortOption;
-  await userController.getAllUser(req, res, sortOption);
+router.get('/:userId', isAuthenticated, (req, res) => {
+  return userController.getUserInfo(req, res, []);
 });
 
-// specific user routes
-router.post('/delete/:userId', userController.deleteUser);
-
-router.get('/:userId', isAuthenticated, userController.getUserInfo);
-
-router.post('/:userId', userController.updateUserInfo);
+router.post('/:userId', isAuthenticated, validator, (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return userController.getUserInfo(req, res, errors.array());
+  }
+  return userController.updateUserInfo(req, res);
+});
 
 module.exports = router;

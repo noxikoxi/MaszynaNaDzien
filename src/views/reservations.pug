@@ -2,10 +2,15 @@ extends layout
 block content
     div.grid-header
         h3.info.text-lg.title #{title}
-        if errors && errors.length > 0
-            each error in errors
-                p.danger #{error.msg}
-    div.content-container
+        form(method="GET")
+            select(name="sortOption", id="sortOption" onchange="this.form.submit()").button-like.text-sm
+                option(value="", selected=true, hidden=true) Sortuj
+                option(value='byDate') Data Rezerwacji
+                option(value='byMachineName') Nazwa Maszyny
+                option(value="byMachineType") Typ Maszyny
+                if !userView
+                    option(value="byUserEmail") Email Rezerwującego
+    div.w80
         div.grid-container
             each reservation in reservations
                 div.reservation-item.grid-item
