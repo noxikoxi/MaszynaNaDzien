@@ -28,8 +28,8 @@ const Reservation = sequelize.define(
 )
 
 Reservation.associate = (models) => {
-    Reservation.belongsTo(models.User, { foreignKey: "user_id" });
-    Reservation.belongsTo(models.Machine, { foreignKey: "machine_id" });
+    Reservation.belongsTo(models.User, { foreignKey: "user_id", onDelete: "CASCADE"});
+    Reservation.belongsTo(models.Machine, { foreignKey: "machine_id", onDelete: "CASCADE" });
 };
 
 module.exports = Reservation;

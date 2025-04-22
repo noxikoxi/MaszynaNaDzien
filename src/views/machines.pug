@@ -13,10 +13,14 @@ block content
             each machine in machines
                 div.machine-item.grid-item
                     if isLoggedIn
-                        div.machine-type.center-content #{machine.type}
+                        div.machine-type.center-content
+                            span.textCenter #{machine.type}
                         div.machine-reserve.center-content
                             a(href="reservations/" + machine.id).text-green.text-bold Zarezerwuj
                     else
-                        div.machine-type.center-content.rowspan2 #{machine.type}
-                    div.machine-name.center-content #{machine.name}
-                    div.machine-description.center-content #{machine.description}
+                        div.machine-type.center-content.rowspan2
+                        span.textCenter #{machine.type}
+                    div.machine-name.center-content
+                        span.textCenter #{machine.name}
+                    div.machine-description.center-content
+                        span.textCenter #{machine.description}

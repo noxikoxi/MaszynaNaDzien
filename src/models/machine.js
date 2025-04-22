@@ -24,7 +24,7 @@ const Machine = sequelize.define(
 )
 
 Machine.associate = (models) => {
-    Machine.belongsTo(models.MachineType, { foreignKey: "type_id" })
+    Machine.belongsTo(models.MachineType, { foreignKey: "type_id", onDelete: "CASCADE"})
     Machine.hasMany(models.Reservation, { foreignKey: "machine_id", onDelete: "CASCADE" });
 };
 

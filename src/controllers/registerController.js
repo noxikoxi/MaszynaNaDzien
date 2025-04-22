@@ -17,7 +17,7 @@ const register = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-         await db.User.create({email, password_hash: hashedPassword});
+        const user = await db.User.create({email, password_hash: hashedPassword});
         res.redirect(`/users/${user.id}`);
     } catch (error) {
         res.render('error', { message: error.message, status: 500 });

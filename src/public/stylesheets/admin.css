@@ -19,7 +19,7 @@ table td{
     max-height: 80%;
 }
 
-.deleteIcon{
+.formIcon{
     width: 24px;
     height: 24px;
 }
@@ -78,6 +78,14 @@ table td{
 #addType{
     flex: 0 1 auto;
     align-self: flex-start
+}
+
+.edit{
+    text-decoration: underline;
+}
+
+.edit:hover{
+    font-weight: 900;
 }
 
 @media (max-width: 768px) {

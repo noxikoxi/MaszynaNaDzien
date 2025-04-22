@@ -6,9 +6,9 @@ const Reservation = require('./reservation');
 
 const db = {
     sequelize,
-    User,
-    Machine,
     MachineType,
+    Machine,
+    User,
     Reservation
 };
 

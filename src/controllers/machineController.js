@@ -72,7 +72,7 @@ const updateMachine = async (req, res) => {
             { where: { id: id } }
         );
 
-        const updatedMachine = await db.Machine.findOne({
+        await db.Machine.findOne({
             where: { id: id },
         });
 

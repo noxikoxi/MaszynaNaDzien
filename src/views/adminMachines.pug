@@ -21,16 +21,20 @@ block content
                         th Nazwa
                         th Opis
                         th Usuń
+                        th Edycja
                 tbody
                     each machine, i in machines
-                        tr(class=(i % 2 === 0 ? '' : 'inverseColor'))
-                            td
-                                a(href="/admin/machines/edit/" + machine.id) #{machine.id}
-                            td #{machine.type}
-                            td #{machine.name}
-                            td #{machine.description}
-                            td
-                                form(action="/admin/machines/delete/" + machine.id method="GET" onsubmit="return confirm('Czy na pewno chcesz usunąć tego użytkownika?');")
-                                    button(type="submit").onlyText
-                                        img(src="/images/delete-icon.png" alt="Usuń").deleteIcon
+                            tr(class=(i % 2 === 0 ? '' : 'inverseColor'))
+                                td #{machine.id}
+                                td #{machine.type}
+                                td #{machine.name}
+                                td #{machine.description}
+                                td
+                                    form(action="/admin/machines/delete/" + machine.id method="GET" onsubmit="return confirm('Czy na pewno chcesz usunąć tego użytkownika?');")
+                                        button(type="submit").onlyText
+                                            img(src="/images/delete-icon.png" alt="Usuń").formIcon
+                                td
+                                    form(action="/admin/machines/edit/" + machine.id method="GET")
+                                        button(type="submit").onlyText
+                                            img(src="/images/edit-icon.png" alt="Edytuj").formIcon
 

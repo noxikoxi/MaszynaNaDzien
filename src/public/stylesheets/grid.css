@@ -1,6 +1,6 @@
 .grid-container{
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 20px;
 }
 
@@ -37,6 +37,10 @@
     border-bottom: 2px solid var(--border-color);
 }
 
+.textCenter{
+    text-align: center;
+}
+
 .rowspan2{
     grid-row: span 2;
     border-bottom:none;
@@ -67,17 +71,18 @@
 
 .reservation_date_from{
     grid-row: 1 / 2;
-    font-weight: 500;
-    font-size: 0.9em;
-    padding: 10px;
     border-bottom: 2px solid var(--border-color);
-    border-right: 2px solid var(--border-color);
 }
 
 .reservation_date_to{
     grid-row: 2 / 3;
+}
+
+.reservation_date_from, .reservation_date_to{
     font-weight: 500;
     font-size: 0.9em;
+    display: flex;
+    flex-direction: column;
     padding: 10px;
     border-right: 2px solid var(--border-color);
 }
