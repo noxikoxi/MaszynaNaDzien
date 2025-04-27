@@ -5,8 +5,8 @@ Aplikacja umożliwiająca rolnikom rezerwowanie maszyn rolniczych (np. traktoró
 ## 🧰 Technologie
 
 - **Backend**: Node.js + Express
-- **ORM**: Sequelize (z bazą SQLite)
-- **Baza danych**: SQLite (prosta, plikowa baza na potrzeby developmentu)
+- **ORM**: Sequelize
+- **Baza danych**: SQLite
 
 ## ⚙️ Uruchomienie projektu
 
@@ -17,6 +17,12 @@ Aplikacja umożliwiająca rolnikom rezerwowanie maszyn rolniczych (np. traktoró
 2. **Uruchom serwer**
    ```bash
    npm start
+
+## ⚙️ Uruchomienie projektu docker
+
+1. **Wykonaj plik start.sh**
+	```bash
+	bash start.sh
 
 ### Specyfikacja projektu
 
