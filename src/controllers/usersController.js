@@ -109,9 +109,6 @@ const updateUserInfo = async (req, res) => {
     try{
         const userId = req.params.userId;
         const { given_name, surname, phone, address} = req.body;
-
-        console.log(req.body);
-
         const existingUser = await db.User.findOne({
             where: { id: userId },
             attributes: { exclude: ['password_hash']}
