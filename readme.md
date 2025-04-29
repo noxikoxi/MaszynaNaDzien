@@ -24,6 +24,8 @@ Aplikacja umożliwiająca rolnikom rezerwowanie maszyn rolniczych (np. traktoró
 	```bash
 	bash start.sh
 
+(start.sh musi miec formatowanie linii LF a nie CRLF)
+
 ### Specyfikacja projektu
 
 #### 1. Wprowadzenie
