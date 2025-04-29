@@ -9,7 +9,7 @@ const createUser = async(req, res) => {
             where: { email }
         });
         if (existingUser){
-            return res.render('adminCreateUser', {title: "Dodaj Użytkownika", errors: [
+            return res.render('adminUserCreate', {title: "Dodaj Użytkownika", errors: [
                     {
                         msg: "Użytkownik o takim adresie email już istnieje"
                     }
