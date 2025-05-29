@@ -70,7 +70,7 @@ const getUserInfo = async (req, res, errors) => {
             attributes: { exclude: ['password_hash']}
         });
         if(!existingUser) {
-            res.render('error', { message: "User with selected ID not found", status: 404 });
+            return res.render('error', { message: "User with selected ID not found", status: 404 });
         }
 
         res.render("profile", {
@@ -115,7 +115,7 @@ const updateUserInfo = async (req, res) => {
         });
 
         if(!existingUser){
-            res.render('error', { message: "User with selected ID not found", status: 404 });
+            return res.render('error', { message: "User with selected ID not found", status: 404 });
         }
 
         await db.User.update(

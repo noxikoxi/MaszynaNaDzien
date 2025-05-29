@@ -19,3 +19,9 @@ nav ul li {
     font-size: 1.2rem;
     font-weight: 500;
 }
+
+@media (max-width: 768px) {
+    #logo {
+        display: none;
+    }
+}
